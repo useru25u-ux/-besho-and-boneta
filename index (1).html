@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Us — A Love Kept</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,500&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Marcellus&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --espresso:#241510;
+    --cocoa:#3b2418;
+    --umber:#5a3a26;
+    --gold:#c9a25c;
+    --gold-soft:#e2c98a;
+    --blush:#d9a79a;
+    --ivory:#f3e9da;
+    --wine:#6b2430;
+    --shadow: rgba(0,0,0,0.45);
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse at top, rgba(201,162,92,0.08), transparent 60%),
+      linear-gradient(180deg, var(--espresso), var(--cocoa) 40%, var(--espresso));
+    color:var(--ivory);
+    font-family:'Cormorant Garamond', serif;
+    font-size:19px;
+    line-height:1.7;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Playfair Display', serif;
+    letter-spacing:0.02em;
+  }
+
+  .eyebrow{
+    font-family:'Marcellus', serif;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    font-size:13px;
+    color:var(--gold-soft);
+    opacity:0.85;
+  }
+
+  a{color:inherit;}
+
+  /* ---------- Ornamental divider (signature element) ---------- */
+  .seal-divider{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:18px;
+    margin:0 auto 46px;
+    width:min(560px, 80%);
+  }
+  .seal-divider .line{
+    flex:1;
+    height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold), transparent);
+    opacity:0.6;
+  }
+  .seal-divider svg{ flex-shrink:0; }
+
+  /* ---------- Nav ---------- */
+  nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    display:flex;
+    justify-content:center;
+    gap:clamp(10px, 3vw, 34px);
+    padding:16px 12px;
+    background:rgba(36,21,16,0.86);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(201,162,92,0.25);
+    flex-wrap:wrap;
+  }
+  nav a{
+    font-family:'Marcellus', serif;
+    font-size:13px;
+    letter-spacing:0.18em;
+    text-transform:uppercase;
+    text-decoration:none;
+    color:var(--ivory);
+    opacity:0.75;
+    position:relative;
+    padding-bottom:4px;
+    transition:opacity .3s ease, color .3s ease;
+  }
+  nav a:hover{ opacity:1; color:var(--gold-soft); }
+  nav a::after{
+    content:'';
+    position:absolute;
+    left:50%; right:50%; bottom:0;
+    height:1px;
+    background:var(--gold);
+    transition:left .3s ease, right .3s ease;
+  }
+  nav a:hover::after{ left:0; right:0; }
+
+  /* ---------- Hero ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:80px 20px 60px;
+    position:relative;
+  }
+  .hero::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    background:
+      radial-gradient(circle at 50% 20%, rgba(201,162,92,0.10), transparent 55%);
+    pointer-events:none;
+  }
+  .hero .eyebrow{ margin-bottom:22px; }
+  .hero h1{
+    font-size:clamp(48px, 9vw, 96px);
+    margin:0;
+    font-style:italic;
+    font-weight:600;
+    color:var(--ivory);
+    text-shadow:0 2px 30px rgba(201,162,92,0.25);
+  }
+  .hero h1 span{
+    color:var(--gold-soft);
+    font-style:normal;
+  }
+  .hero p.sub{
+    max-width:560px;
+    margin:26px auto 0;
+    color:var(--blush);
+    font-size:22px;
+    font-style:italic;
+  }
+  .birthday-msg{
+    max-width:520px;
+    margin:16px auto 0;
+    font-family:'Marcellus', serif;
+    font-size:14px;
+    letter-spacing:0.1em;
+    color:var(--gold-soft);
+    opacity:0.85;
+    text-transform:uppercase;
+  }
+  .monogram{
+    margin-top:44px;
+    width:96px; height:96px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:'Playfair Display', serif;
+    font-size:30px;
+    color:var(--gold-soft);
+    letter-spacing:2px;
+    box-shadow:0 0 0 6px rgba(201,162,92,0.08), inset 0 0 18px rgba(201,162,92,0.15);
+  }
+
+  /* ---------- Section shell ---------- */
+  section{
+    padding:120px 20px;
+    max-width:1080px;
+    margin:0 auto;
+    position:relative;
+  }
+  .section-head{
+    text-align:center;
+    margin-bottom:56px;
+  }
+  .section-head h2{
+    font-size:clamp(32px, 5vw, 52px);
+    margin:10px 0 0;
+    font-weight:600;
+  }
+
+  /* ---------- Timeline ---------- */
+  .timeline{
+    position:relative;
+    margin-top:60px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute;
+    left:50%;
+    top:0; bottom:0;
+    width:1px;
+    background:linear-gradient(180deg, transparent, var(--gold) 8%, var(--gold) 92%, transparent);
+    transform:translateX(-50%);
+  }
+  .t-item{
+    display:flex;
+    width:100%;
+    margin-bottom:70px;
+    position:relative;
+  }
+  .t-item:nth-child(odd){ justify-content:flex-start; }
+  .t-item:nth-child(even){ justify-content:flex-end; }
+  .t-card{
+    width:44%;
+    background:linear-gradient(160deg, rgba(90,58,38,0.5), rgba(36,21,16,0.5));
+    border:1px solid rgba(201,162,92,0.25);
+    border-radius:4px;
+    padding:26px 28px;
+    position:relative;
+  }
+  .t-card .date{
+    font-family:'Marcellus', serif;
+    color:var(--gold-soft);
+    font-size:13px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+  }
+  .t-card h3{ margin:8px 0 6px; font-size:24px; }
+  .t-dot{
+    position:absolute;
+    top:26px;
+    left:50%;
+    transform:translateX(-50%);
+    width:13px; height:13px;
+    background:var(--espresso);
+    border:2px solid var(--gold);
+    border-radius:50%;
+  }
+
+  /* ---------- Gallery ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:16px;
+  }
+  .frame{
+    aspect-ratio:4/5;
+    border:1px solid rgba(201,162,92,0.35);
+    background:linear-gradient(160deg, rgba(90,58,38,0.55), rgba(36,21,16,0.7));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:16px;
+    font-family:'Marcellus', serif;
+    font-size:13px;
+    letter-spacing:0.08em;
+    color:rgba(243,233,218,0.55);
+    position:relative;
+    overflow:hidden;
+    border-radius:2px;
+  }
+  .frame::before{
+    content:'';
+    position:absolute; inset:6px;
+    border:1px solid rgba(201,162,92,0.35);
+    pointer-events:none;
+  }
+  .frame img{ width:100%; height:100%; object-fit:cover; display:block; }
+
+  /* ---------- Letters ---------- */
+  .letters{
+    display:flex;
+    flex-direction:column;
+    gap:34px;
+  }
+  .letter{
+    background:linear-gradient(160deg, rgba(90,58,38,0.4), rgba(36,21,16,0.4));
+    border:1px solid rgba(201,162,92,0.25);
+    border-radius:4px;
+    padding:38px 42px;
+    position:relative;
+  }
+  .letter .to{
+    font-style:italic;
+    color:var(--gold-soft);
+    font-size:22px;
+    margin-bottom:14px;
+  }
+  .letter p{ margin:0 0 14px; }
+  .letter .sign{
+    text-align:right;
+    font-style:italic;
+    color:var(--blush);
+    margin-top:20px;
+  }
+  .wax{
+    position:absolute;
+    top:-18px; right:34px;
+    width:40px; height:40px;
+    border-radius:50%;
+    background:radial-gradient(circle at 35% 30%, #8a2e39, var(--wine));
+    box-shadow:0 4px 10px rgba(0,0,0,0.5);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display', serif;
+    font-size:15px;
+    color:var(--gold-soft);
+  }
+
+  /* ---------- Music ---------- */
+  .music-list{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+    border-top:1px solid rgba(201,162,92,0.25);
+  }
+  .track{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:22px 8px;
+    border-bottom:1px solid rgba(201,162,92,0.2);
+    transition:padding-left .3s ease;
+  }
+  .track:hover{ padding-left:18px; background:rgba(201,162,92,0.05); }
+  .track .num{
+    font-family:'Marcellus', serif;
+    color:var(--gold-soft);
+    width:30px;
+  }
+  .track .info{ flex:1; padding:0 14px; }
+  .track .title{ font-size:21px; }
+  .track .artist{ font-size:15px; color:rgba(243,233,218,0.55); font-style:italic; }
+  .track .why{ font-size:14px; color:var(--blush); font-style:italic; max-width:260px; text-align:right; }
+
+  /* ---------- Places ---------- */
+  .places-grid{
+    display:grid;
+    grid-template-columns:repeat(2, 1fr);
+    gap:22px;
+  }
+  .place{
+    border:1px solid rgba(201,162,92,0.25);
+    border-radius:4px;
+    padding:30px 32px;
+    background:linear-gradient(160deg, rgba(90,58,38,0.35), rgba(36,21,16,0.35));
+  }
+  .place .eyebrow{ display:block; margin-bottom:10px; }
+  .place h3{ margin:0 0 10px; font-size:26px; }
+
+  /* ---------- Bucket List ---------- */
+  .bucket-list{
+    list-style:none;
+    padding:0;
+    margin:0;
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .bucket-list li{
+    display:flex;
+    align-items:center;
+    gap:18px;
+    padding:20px 6px;
+    border-bottom:1px dashed rgba(201,162,92,0.3);
+    font-size:22px;
+  }
+  .check{
+    width:22px; height:22px;
+    border:1px solid var(--gold);
+    border-radius:50%;
+    flex-shrink:0;
+  }
+  .bucket-list li.done .check{ background:var(--gold); }
+  .bucket-list li.done span{ text-decoration:line-through; opacity:0.5; }
+
+  footer{
+    text-align:center;
+    padding:60px 20px 80px;
+    color:rgba(243,233,218,0.5);
+    font-family:'Marcellus', serif;
+    font-size:13px;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Anniversary counter ---------- */
+  .counter{
+    display:flex;
+    gap:clamp(14px, 4vw, 34px);
+    margin-top:40px;
+    flex-wrap:wrap;
+    justify-content:center;
+  }
+  .counter .unit{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    min-width:70px;
+  }
+  .counter .num{
+    font-family:'Playfair Display', serif;
+    font-size:clamp(30px, 6vw, 46px);
+    color:var(--gold-soft);
+    font-weight:600;
+    line-height:1;
+  }
+  .counter .label{
+    font-family:'Marcellus', serif;
+    font-size:11px;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:rgba(243,233,218,0.6);
+    margin-top:8px;
+  }
+  .since{
+    margin-top:18px;
+    font-style:italic;
+    color:var(--blush);
+    font-size:16px;
+    letter-spacing:0.04em;
+  }
+
+  /* ---------- Button menu (opens each method) ---------- */
+  .menu{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:20px;
+    max-width:820px;
+    margin:56px auto 0;
+    padding:0 20px;
+  }
+  .menu-btn{
+    font-family:'Marcellus', serif;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    font-size:14px;
+    color:var(--ivory);
+    background:linear-gradient(160deg, rgba(90,58,38,0.55), rgba(36,21,16,0.65));
+    border:1px solid rgba(201,162,92,0.4);
+    border-radius:4px;
+    padding:26px 14px;
+    cursor:pointer;
+    transition:all .3s ease;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .menu-btn svg{ width:26px; height:26px; opacity:0.85; }
+  .menu-btn:hover{
+    background:linear-gradient(160deg, rgba(201,162,92,0.25), rgba(90,58,38,0.5));
+    border-color:var(--gold);
+    transform:translateY(-4px);
+    box-shadow:0 12px 24px rgba(0,0,0,0.35);
+  }
+
+  /* ---------- Modal overlay for each section ---------- */
+  .modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:100;
+    background:rgba(15,9,6,0.92);
+    backdrop-filter:blur(6px);
+    overflow-y:auto;
+    padding:70px 20px 100px;
+  }
+  .modal.active{ display:block; }
+  .modal-inner{
+    max-width:1080px;
+    margin:0 auto;
+    position:relative;
+  }
+  .modal-close{
+    position:fixed;
+    top:24px;
+    right:clamp(20px, 4vw, 60px);
+    z-index:110;
+    width:44px; height:44px;
+    border-radius:50%;
+    border:1px solid var(--gold);
+    background:rgba(36,21,16,0.8);
+    color:var(--gold-soft);
+    font-size:20px;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    transition:all .3s ease;
+  }
+  .modal-close:hover{ background:var(--gold); color:var(--espresso); }
+
+  body.modal-open{ overflow:hidden; }
+
+  @media (max-width:760px){
+    .menu{ grid-template-columns:repeat(2, 1fr); }
+  }
+
+  @media (max-width:760px){
+    nav{ gap:10px 16px; }
+    section{ padding:80px 18px; }
+    .timeline::before{ left:20px; }
+    .t-item, .t-item:nth-child(even){ justify-content:flex-start; padding-left:40px; }
+    .t-card{ width:100%; }
+    .t-dot{ left:20px; }
+    .gallery-grid{ grid-template-columns:repeat(2, 1fr); }
+    .places-grid{ grid-template-columns:1fr; }
+    .track .why{ display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="eyebrow">Since 23 · August · 2023</div>
+  <h1>Besho <span>🤎</span> Boneta</h1>
+  <p class="sub">Я люблю тебя 🤎</p>
+  <p class="birthday-msg">In 2026, your 21st birthday — I made this for you.</p>
+  <div class="monogram">B&nbsp;&amp;&nbsp;B</div>
+
+  <div class="counter" id="counter">
+    <div class="unit"><div class="num" id="c-years">0</div><div class="label">Years</div></div>
+    <div class="unit"><div class="num" id="c-months">0</div><div class="label">Months</div></div>
+    <div class="unit"><div class="num" id="c-days">0</div><div class="label">Days</div></div>
+    <div class="unit"><div class="num" id="c-hours">0</div><div class="label">Hours</div></div>
+    <div class="unit"><div class="num" id="c-mins">0</div><div class="label">Minutes</div></div>
+    <div class="unit"><div class="num" id="c-secs">0</div><div class="label">Seconds</div></div>
+  </div>
+  <div class="since" id="total-days"></div>
+
+  <nav class="menu">
+    <button class="menu-btn" onclick="openModal('timeline')">Timeline</button>
+    <button class="menu-btn" onclick="openModal('gallery')">Gallery</button>
+    <button class="menu-btn" onclick="openModal('letters')">Letters</button>
+    <button class="menu-btn" onclick="openModal('music')">Music</button>
+    <button class="menu-btn" onclick="openModal('places')">Places</button>
+    <button class="menu-btn" onclick="openModal('bucket')">Bucket List</button>
+  </nav>
+</header>
+
+<section id="timeline" class="modal"><button class="modal-close" onclick="closeModal('timeline')">&times;</button><div class="modal-inner">
+  <div class="section-head">
+    <div class="eyebrow">Our Story</div>
+    <h2>Timeline</h2>
+  </div>
+
+  <div class="timeline">
+    <!-- Each block below is one moment. Edit the date, the h3 title,
+         and the paragraph text. Copy a whole block to add a new moment. -->
+    <div class="t-item">
+      <div class="t-card">
+        <div class="date">The First Day</div>
+        <h3>Where It Began</h3>
+        <p>Replace this with the story of the day you met — the small details you still remember.</p>
+      </div>
+      <div class="t-dot"></div>
+    </div>
+    <div class="t-item">
+      <div class="t-card">
+        <div class="date">The First Date</div>
+        <h3>An Evening to Remember</h3>
+        <p>Describe where you went, what you talked about, the moment you knew.</p>
+      </div>
+      <div class="t-dot"></div>
+    </div>
+    <div class="t-item">
+      <div class="t-card">
+        <div class="date">First "I Love You"</div>
+        <h3>The Words That Changed Everything</h3>
+        <p>Tell it the way you remember it — where you were, how it felt.</p>
+      </div>
+      <div class="t-dot"></div>
+    </div>
+    <div class="t-item">
+      <div class="t-card">
+        <div class="date">Today</div>
+        <h3>Still Choosing Each Other</h3>
+        <p>A note about where you both are now, and what's ahead.</p>
+      </div>
+      <div class="t-dot"></div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="gallery" class="modal"><button class="modal-close" onclick="closeModal('gallery')">&times;</button><div class="modal-inner">
+  <div class="section-head">
+    <div class="eyebrow">Moments</div>
+    <h2>Gallery</h2>
+  </div>
+  <div class="gallery-grid">
+    <!-- ADD PHOTO 1 HERE: replace this whole line with:
+         <div class="frame"><img src="photo1.jpg" alt="caption here"></div> -->
+    <div class="frame">Photo 1<br>— caption —</div>
+
+    <!-- ADD PHOTO 2 HERE -->
+    <div class="frame">Photo 2<br>— caption —</div>
+
+    <!-- ADD PHOTO 3 HERE -->
+    <div class="frame">Photo 3<br>— caption —</div>
+
+    <!-- ADD PHOTO 4 HERE -->
+    <div class="frame">Photo 4<br>— caption —</div>
+
+    <!-- ADD PHOTO 5 HERE -->
+    <div class="frame">Photo 5<br>— caption —</div>
+
+    <!-- ADD PHOTO 6 HERE -->
+    <div class="frame">Photo 6<br>— caption —</div>
+  </div>
+</div>
+</section>
+
+<section id="letters" class="modal"><button class="modal-close" onclick="closeModal('letters')">&times;</button><div class="modal-inner">
+  <div class="section-head">
+    <div class="eyebrow">Written From the Heart</div>
+    <h2>Letters</h2>
+  </div>
+  <div class="letters">
+    <!-- Each block below is one letter. Edit "To my love,", the <p> paragraphs,
+         and the signature line. Copy a whole block to add another letter. -->
+    <div class="letter">
+      <div class="wax">B</div>
+      <div class="to">To my love,</div>
+      <p>This is where a real letter goes — something you'd want her to read on a quiet evening. Keep it honest and specific; those details are what make it feel like yours.</p>
+      <p>Add a second paragraph if you like, then close it the way you always do.</p>
+      <div class="sign">— Yours, always</div>
+    </div>
+    <div class="letter">
+      <div class="wax">B</div>
+      <div class="to">To my favorite person,</div>
+      <p>A second letter — maybe hers to you, or another one of yours. Replace with your real words.</p>
+      <div class="sign">— With all my heart</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="music" class="modal"><button class="modal-close" onclick="closeModal('music')">&times;</button><div class="modal-inner">
+  <div class="section-head">
+    <div class="eyebrow">The Soundtrack</div>
+    <h2>Music</h2>
+  </div>
+  <div class="music-list">
+    <!-- To make the title a clickable link to Spotify/YouTube, replace:
+         <div class="title">Song Title</div>
+         with:
+         <div class="title"><a href="https://open.spotify.com/track/..." target="_blank">Song Title</a></div> -->
+    <div class="track">
+      <div class="num">01</div>
+      <div class="info"><div class="title">Song Title</div><div class="artist">Artist Name</div></div>
+      <div class="why">the song that was playing when—</div>
+    </div>
+    <div class="track">
+      <div class="num">02</div>
+      <div class="info"><div class="title">Song Title</div><div class="artist">Artist Name</div></div>
+      <div class="why">our song</div>
+    </div>
+    <div class="track">
+      <div class="num">03</div>
+      <div class="info"><div class="title">Song Title</div><div class="artist">Artist Name</div></div>
+      <div class="why">for slow dancing in the kitchen</div>
+    </div>
+    <div class="track">
+      <div class="num">04</div>
+      <div class="info"><div class="title">Song Title</div><div class="artist">Artist Name</div></div>
+      <div class="why">reminds me of her laugh</div>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="places" class="modal"><button class="modal-close" onclick="closeModal('places')">&times;</button><div class="modal-inner">
+  <div class="section-head">
+    <div class="eyebrow">Where We've Been</div>
+    <h2>Places</h2>
+  </div>
+  <div class="places-grid">
+    <!-- Each block below is one place. Edit "Chapter One", "Place Name",
+         and the description. Copy a whole block to add another place. -->
+    <div class="place">
+      <span class="eyebrow">Chapter One</span>
+      <h3>Place Name</h3>
+      <p>What happened here, and why it stays with you.</p>
+    </div>
+    <div class="place">
+      <span class="eyebrow">Chapter Two</span>
+      <h3>Place Name</h3>
+      <p>What happened here, and why it stays with you.</p>
+    </div>
+    <div class="place">
+      <span class="eyebrow">Chapter Three</span>
+      <h3>Place Name</h3>
+      <p>What happened here, and why it stays with you.</p>
+    </div>
+    <div class="place">
+      <span class="eyebrow">Chapter Four</span>
+      <h3>Place Name</h3>
+      <p>What happened here, and why it stays with you.</p>
+    </div>
+  </div>
+</div>
+</section>
+
+<section id="bucket" class="modal"><button class="modal-close" onclick="closeModal('bucket')">&times;</button><div class="modal-inner">
+  <div class="section-head">
+    <div class="eyebrow">What's Next For Us</div>
+    <h2>Bucket List</h2>
+  </div>
+  <ul class="bucket-list">
+    <!-- Add class="done" to <li> to mark an item complete (adds gold check + strikethrough).
+         Remove class="done" for items not done yet. Copy a whole <li> line to add more items. -->
+    <li class="done"><div class="check"></div><span>Watch the sunrise together</span></li>
+    <li><div class="check"></div><span>Travel somewhere neither of us has been</span></li>
+    <li><div class="check"></div><span>Cook a full dinner together, start to finish</span></li>
+    <li><div class="check"></div><span>Write each other a letter to open in ten years</span></li>
+    <li><div class="check"></div><span>Learn a dance together</span></li>
+    <li><div class="check"></div><span>Adopt a pet together</span></li>
+  </ul>
+</div>
+</section>
+
+<footer>
+  Made with love, for us.
+</footer>
+
+<script>
+  function openModal(id){
+    document.getElementById(id).classList.add('active');
+    document.body.classList.add('modal-open');
+  }
+  function closeModal(id){
+    document.getElementById(id).classList.remove('active');
+    document.body.classList.remove('modal-open');
+  }
+  document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){
+      document.querySelectorAll('.modal.active').forEach(function(m){
+        m.classList.remove('active');
+      });
+      document.body.classList.remove('modal-open');
+    }
+  });
+
+  // ---- Anniversary counter: 23 August 2023 ----
+  const startDate = new Date(2023, 7, 23, 0, 0, 0); // month is 0-indexed: 7 = August
+
+  function updateCounter(){
+    const now = new Date();
+    let diffMs = now - startDate;
+
+    const totalDays = Math.floor(diffMs / (1000*60*60*24));
+
+    let years = now.getFullYear() - startDate.getFullYear();
+    let months = now.getMonth() - startDate.getMonth();
+    let days = now.getDate() - startDate.getDate();
+    let hours = now.getHours() - startDate.getHours();
+    let mins = now.getMinutes() - startDate.getMinutes();
+    let secs = now.getSeconds() - startDate.getSeconds();
+
+    if(secs < 0){ secs += 60; mins--; }
+    if(mins < 0){ mins += 60; hours--; }
+    if(hours < 0){ hours += 24; days--; }
+    if(days < 0){
+      const prevMonth = new Date(now.getFullYear(), now.getMonth(), 0).getDate();
+      days += prevMonth;
+      months--;
+    }
+    if(months < 0){ months += 12; years--; }
+
+    document.getElementById('c-years').textContent = years;
+    document.getElementById('c-months').textContent = months;
+    document.getElementById('c-days').textContent = days;
+    document.getElementById('c-hours').textContent = String(hours).padStart(2,'0');
+    document.getElementById('c-mins').textContent = String(mins).padStart(2,'0');
+    document.getElementById('c-secs').textContent = String(secs).padStart(2,'0');
+
+    document.getElementById('total-days').textContent = totalDays.toLocaleString() + ' days together, and counting.';
+  }
+
+  updateCounter();
+  setInterval(updateCounter, 1000);
+</script>
+</body>
+</html>
